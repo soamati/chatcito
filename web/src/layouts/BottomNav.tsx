@@ -58,7 +58,7 @@ export const BottomNav = () => {
         <Group position="apart" px="xl" py="xs">
           <NavItem Icon={MessageCircle} label="Chats" to="/home" />
           <NavItem Icon={Rocket} label="Salas" to="/rooms" />
-          <NavItem Icon={HeartPlus} label="Amigos" to="/" />
+          <NavItem Icon={HeartPlus} label="Amigos" to="/friends/search" />
           <NavItem Icon={User} label="Perfil" to="/" />
         </Group>
       </Paper>

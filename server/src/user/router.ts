@@ -17,8 +17,37 @@ export const users = createRouter()
     async resolve({ ctx }) {
       const { prisma, user } = ctx;
 
-      const users = await prisma.user.findMany({
+      const usersWithFriendships = await prisma.user.findMany({
         where: { id: { not: user?.id } },
+        include: {
+          senderFriendships: { where: { receiverId: user?.id } },
+          receiverFriendships: { where: { senderId: user?.id } },
+        },
+      });
+
+      const users = usersWithFriendships.map((_user) => {
+        const { senderFriendships, receiverFriendships, ...user } = _user;
+
+        const [senderFriendship] = senderFriendships;
+        const [receiverFriendship] = receiverFriendships;
+
+        let friendship = null;
+
+        if (senderFriendship) {
+          friendship = {
+            isSender: false,
+            status: senderFriendship.status,
+          };
+        }
+
+        if (receiverFriendship) {
+          friendship = {
+            isSender: true,
+            status: receiverFriendship.status,
+          };
+        }
+
+        return { ...user, friendship };
       });
 
       return users;

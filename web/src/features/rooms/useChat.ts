@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useSocket } from '../../context/SocketProvider';
-import { useAuthUser } from '../../hooks/useMe';
+import { useAuthUser } from '../../hooks/useAuthUser';
 import { InferQueryOutput } from '../../types';
 import { useQueryClient } from 'react-query';
 import { useRoomId } from './useRoomId';

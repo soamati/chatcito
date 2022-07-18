@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SocketProvider } from '../context/SocketProvider';
+import { NotificationsProvider } from '@mantine/notifications';
 
 const queryClient = new QueryClient();
 
@@ -25,9 +26,11 @@ const App = ({ Component, pageProps }: AppProps) => {
           withNormalizeCSS
           theme={{ colorScheme: 'dark' }}
         >
-          <SocketProvider>
-            <Component {...pageProps} />
-          </SocketProvider>
+          <NotificationsProvider>
+            <SocketProvider>
+              <Component {...pageProps} />
+            </SocketProvider>
+          </NotificationsProvider>
         </MantineProvider>
 
         <ReactQueryDevtools initialIsOpen={false} />

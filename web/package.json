@@ -12,6 +12,7 @@
     "@mantine/core": "^4.2.12",
     "@mantine/hooks": "^4.2.12",
     "@mantine/next": "^4.2.12",
+    "@mantine/notifications": "^4.2.12",
     "@trpc/client": "^9.25.3",
     "@trpc/server": "^9.25.3",
     "date-fns": "^2.28.0",

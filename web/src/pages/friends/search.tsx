@@ -3,19 +3,29 @@ import { NextPage } from 'next';
 import { Page } from '../../layouts/Page';
 import { Header } from '../../layouts/Header';
 import { useAllUsers } from '../../features/users/queries';
+import { Box, Stack } from '@mantine/core';
+import { BottomNav } from '../../layouts/BottomNav';
+import { PossibleFriend } from '../../features/friendships/PossibleFriend';
 
 const SearchPage: NextPage = () => {
   const [users] = useAllUsers();
 
   return (
-    <Page>
+    <>
       <Header title="Buscar amigos" />
-      {users?.map((user) => (
-        <div key={user.id} style={{ wordBreak: 'break-all' }}>
-          <p>{JSON.stringify(user, null, 2)}</p>
-        </div>
-      ))}
-    </Page>
+
+      <Page>
+        <Box py={64}>
+          <Stack m="md">
+            {users?.map((user) => (
+              <PossibleFriend key={user.id} user={user} />
+            ))}
+          </Stack>
+        </Box>
+      </Page>
+
+      <BottomNav />
+    </>
   );
 };
 

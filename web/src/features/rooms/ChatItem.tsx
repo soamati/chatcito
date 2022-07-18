@@ -1,11 +1,11 @@
 import React from 'react';
-import { Paper, Group, Avatar, Stack, Text, createStyles } from '@mantine/core';
+import { Paper, Group, Stack, Text, createStyles } from '@mantine/core';
 import { fromNow } from '../../utils/date';
-import { InferQueryOutput } from '../../types';
-import { getInitials } from '../../utils/getInitials';
+import { Chat } from './types';
+import { Avatar } from '../../components/Avatar';
 
 type Props = {
-  chat: InferQueryOutput<'room.chats'>[number];
+  chat: Chat;
   isMe?: boolean;
 };
 
@@ -29,11 +29,8 @@ export const ChatItem = ({ chat, isMe = false }: Props) => {
         <Avatar
           src={chat.sender.image}
           alt={chat.sender.name}
-          radius="xl"
-          size="sm"
-        >
-          {getInitials(chat.sender.name)}
-        </Avatar>
+          name={chat.sender.name}
+        />
         <Stack spacing={2}>
           <Group ml="xs" spacing="xs">
             <Text size="xs">{chat.sender.name}</Text>

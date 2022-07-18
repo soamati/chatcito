@@ -4,7 +4,7 @@ import { useChats } from './queries';
 import { useScrollIntoView } from '@mantine/hooks';
 import { Loader } from '../../components/Loader';
 import { ChatItem } from './ChatItem';
-import { useAuthUser } from '../../hooks/useMe';
+import { useAuthUser } from '../../hooks/useAuthUser';
 
 export const Chats = () => {
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({

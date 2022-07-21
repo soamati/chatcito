@@ -1,13 +1,15 @@
 import React from 'react';
-import { ActionIcon, Group, Paper, Title } from '@mantine/core';
+import Link from 'next/link';
+import { ActionIcon, Center, Group, Paper, Title } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { ArrowLeft } from 'tabler-icons-react';
+import { ArrowLeft, Bell } from 'tabler-icons-react';
 
 type Props = {
   title?: string;
+  Side?: React.ReactNode;
 };
 
-export const Header = ({ title = 'Chatcito' }: Props) => {
+export const Header = ({ title = 'Chatcito', Side }: Props) => {
   const router = useRouter();
 
   return (
@@ -19,11 +21,24 @@ export const Header = ({ title = 'Chatcito' }: Props) => {
       }}
       withBorder
     >
-      <Group spacing="xs" p="xs" sx={{ minHeight: '64px' }}>
-        <ActionIcon>
-          <ArrowLeft onClick={() => router.back()} />
-        </ActionIcon>
-        <Title order={4}>{title}</Title>
+      <Group p="xs" sx={{ minHeight: '64px' }} position="apart">
+        <Group spacing="xs">
+          <ActionIcon>
+            <ArrowLeft onClick={() => router.back()} />
+          </ActionIcon>
+          <Title order={4}>{title}</Title>
+        </Group>
+
+        {/* For menu */}
+        <Center>
+          {Side ?? (
+            <Link href="/notifications" passHref>
+              <ActionIcon size="lg" variant="transparent">
+                <Bell size={24} />
+              </ActionIcon>
+            </Link>
+          )}
+        </Center>
       </Group>
     </Paper>
   );

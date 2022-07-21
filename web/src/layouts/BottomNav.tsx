@@ -59,7 +59,7 @@ export const BottomNav = () => {
           <NavItem Icon={MessageCircle} label="Chats" to="/home" />
           <NavItem Icon={Rocket} label="Salas" to="/rooms" />
           <NavItem Icon={HeartPlus} label="Amigos" to="/friends/search" />
-          <NavItem Icon={User} label="Perfil" to="/" />
+          <NavItem Icon={User} label="Perfil" to="/profile" />
         </Group>
       </Paper>
     </Box>

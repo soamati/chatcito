@@ -7,7 +7,7 @@ export function useJoinRoom() {
   const socket = useSocket();
   const router = useRouter();
 
-  React.useEffect(() => {
+  const join = React.useCallback(() => {
     const rid = router.query.rid;
     if (typeof rid !== 'string') return;
 
@@ -16,5 +16,5 @@ export function useJoinRoom() {
     });
   }, [socket, router]);
 
-  return { isJoined };
+  return { join, isJoined };
 }

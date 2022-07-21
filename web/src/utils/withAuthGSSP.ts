@@ -1,4 +1,9 @@
 import { GetServerSideProps } from 'next';
+import { ExcludeNull, InferQueryOutput } from '../types';
+
+export type WithUserProps<T> = T & {
+  user: ExcludeNull<InferQueryOutput<'user.auth'>>;
+};
 
 export const withAuthGSSP = (): GetServerSideProps => {
   return async ({ req, resolvedUrl }) => {

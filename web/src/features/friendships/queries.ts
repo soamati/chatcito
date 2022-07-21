@@ -1,6 +1,30 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { trpc } from '../../lib/trpc';
+
+export function useFriends() {
+  const { data, isLoading } = useQuery(['friends'], () =>
+    trpc.query('friendship.friends')
+  );
+
+  return [data, isLoading] as const;
+}
+
+export function useFriendRequests() {
+  const { data, isLoading } = useQuery(['friend-requests'], async () => {
+    const requests = await trpc.query('friendship.requests');
+
+    return requests.map((request) => ({
+      ...request.sender,
+      friendship: {
+        isSender: false,
+        status: request.status,
+      },
+    }));
+  });
+
+  return [data, isLoading] as const;
+}
 
 export function useSendRequest() {
   const { mutate, isLoading } = useMutation((receiverId: string) =>

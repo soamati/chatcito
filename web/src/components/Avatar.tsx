@@ -14,9 +14,9 @@ export const Avatar = ({ src, alt, name, size = 'sm' }: Props) => {
     <_Avatar
       src={src}
       alt={alt}
-      radius="xl"
       size={size}
       imageProps={{ referrerPolicy: 'no-referrer' }}
+      sx={{ borderRadius: '50%' }}
     >
       {getInitials(name)}
     </_Avatar>

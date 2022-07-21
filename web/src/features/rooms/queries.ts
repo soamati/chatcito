@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useMutation, useQuery } from 'react-query';
 import { trpc } from '../../lib/trpc';
 import { useRoomId } from './useRoomId';
+import { useJoinRoom } from './useJoinRoom';
 
 export function useCreateRoom() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export function useRooms() {
 }
 
 export function useRoom() {
+  const { join, isJoined } = useJoinRoom();
   const router = useRouter();
 
   const id = React.useMemo(() => {
@@ -30,11 +32,18 @@ export function useRoom() {
     return typeof rid === 'string' ? rid : '';
   }, [router]);
 
-  const { data, isLoading } = useQuery(['rooms', id], () =>
-    trpc.query('room.byId', { id })
+  const { data: room, isLoading } = useQuery(
+    ['rooms', id],
+    () => trpc.query('room.byId', { id }),
+    {
+      onSuccess(room) {
+        if (!room) return;
+        join();
+      },
+    }
   );
 
-  return [data, isLoading] as const;
+  return { room, isLoading, isJoined } as const;
 }
 
 export function useChats() {

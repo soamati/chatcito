@@ -3,6 +3,36 @@ import { z } from 'zod';
 import { createProtectedRouter } from '../lib/createProtectedRouter';
 
 export const friendships = createProtectedRouter()
+  .query('friends', {
+    async resolve({ ctx: { prisma, user } }) {
+      const friendships = await prisma.friendship.findMany({
+        where: {
+          OR: [{ senderId: user.id }, { receiverId: user.id }],
+          status: 'ACCEPTED',
+        },
+        include: { sender: true, receiver: true },
+      });
+
+      const friends = friendships.map((friendship) => {
+        if (friendship.sender.id === user.id) {
+          return friendship.receiver;
+        }
+        return friendship.sender;
+      });
+
+      return friends;
+    },
+  })
+  .query('requests', {
+    async resolve({ ctx: { prisma, user } }) {
+      const requests = await prisma.friendship.findMany({
+        where: { receiverId: user.id, status: 'PENDING' },
+        include: { sender: true },
+      });
+
+      return requests;
+    },
+  })
   .mutation('create', {
     input: z.object({ receiverId: z.string() }),
     async resolve({ input, ctx }) {

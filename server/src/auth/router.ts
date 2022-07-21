@@ -18,6 +18,6 @@ auth.get('/logout', (req, res, next) => {
     if (error) {
       return next(error);
     }
-    return res.json({ message: 'ok!' });
+    return res.redirect(process.env.WEB_URL as string);
   });
 });

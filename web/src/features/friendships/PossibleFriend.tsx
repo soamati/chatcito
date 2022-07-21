@@ -1,9 +1,9 @@
 import React from 'react';
 import { Paper, Group, Button, Text } from '@mantine/core';
 import { InferQueryOutput } from '../../types';
-import { Avatar } from '../../components/Avatar';
 import { useAcceptRequest, useCancelRequest, useSendRequest } from './queries';
 import { useWatchedState } from '../../hooks/useWatchedState';
+import { UserPreview } from '../../components/UserPreview';
 
 type Props = {
   user: InferQueryOutput<'user.all'>[number];
@@ -52,18 +52,7 @@ export const PossibleFriend = ({ user }: Props) => {
   return (
     <Paper withBorder key={user.id}>
       <Group p="xs" position="apart">
-        <Group spacing="xs">
-          <Avatar src={user.image} alt={user.name} name={user.name} size="md" />
-          <div>
-            <Text size="lg" weight="bold">
-              {user.name}
-            </Text>
-            <Text size="xs" color="dimmed">
-              #{user.id.slice(-5)}
-            </Text>
-          </div>
-        </Group>
-
+        <UserPreview user={user} />
         {!friendship ? (
           <Button variant="subtle" onClick={handleSend} loading={isSending}>
             Agregar

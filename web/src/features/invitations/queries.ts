@@ -1,3 +1,4 @@
+import { showNotification } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
@@ -13,6 +14,12 @@ export function useInvite() {
     (targetId: string) =>
       trpc.mutation('invitation.send', { roomId, targetId }),
     {
+      onSuccess() {
+        showNotification({
+          title: 'Genial! 👍',
+          message: 'Invitación enviada',
+        });
+      },
       onError(error) {
         handler(error);
       },

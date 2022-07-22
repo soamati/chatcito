@@ -123,4 +123,39 @@ export const rooms = createProtectedRouter()
 
       return updated;
     },
+  })
+  .mutation('leave', {
+    input: z.object({ roomId: z.string() }),
+    async resolve({ ctx: { prisma, user }, input }) {
+      const { roomId } = input;
+
+      await prisma.usersOnRooms.delete({
+        where: { roomId_userId: { roomId, userId: user.id } },
+      });
+
+      return true;
+    },
+  })
+  .mutation('kick', {
+    input: z.object({ memberId: z.string(), roomId: z.string() }),
+    async resolve({ ctx: { prisma }, input }) {
+      const { memberId, roomId } = input;
+
+      await prisma.usersOnRooms.delete({
+        where: { roomId_userId: { roomId, userId: memberId } },
+      });
+
+      return true;
+    },
+  })
+  .query('members', {
+    input: z.object({ id: z.string() }),
+    async resolve({ ctx: { prisma }, input: { id } }) {
+      const usersOnRoom = await prisma.usersOnRooms.findMany({
+        where: { roomId: id },
+        select: { user: true, memberSince: true },
+      });
+
+      return usersOnRoom;
+    },
   });

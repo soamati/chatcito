@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ActionIcon, Center, Group, Paper, Title } from '@mantine/core';
+import { ActionIcon, Center, Group, Paper, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { ArrowLeft, Bell } from 'tabler-icons-react';
 
@@ -21,12 +21,14 @@ export const Header = ({ title = 'Chatcito', Side }: Props) => {
       }}
       withBorder
     >
-      <Group p="xs" sx={{ minHeight: '64px' }} position="apart">
-        <Group spacing="xs">
+      <Group p="xs" sx={{ minHeight: '64px' }} position="apart" noWrap>
+        <Group spacing="xs" noWrap>
           <ActionIcon>
             <ArrowLeft onClick={() => router.back()} />
           </ActionIcon>
-          <Title order={4}>{title}</Title>
+          <Text size="lg" weight="bold" lineClamp={1}>
+            {title}
+          </Text>
         </Group>
 
         {/* For menu */}

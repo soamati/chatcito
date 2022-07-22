@@ -85,16 +85,16 @@ model Invitation {
   roomId    String   @map("room_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@unique([senderId, targetId])
+  @@unique([senderId, targetId, roomId])
   @@map("invitation")
 }
 
 model UsersOnRooms {
-  room         Room     @relation(fields: [roomId], references: [id])
-  user         User     @relation(fields: [userId], references: [id])
-  roomId       String   @map("room_id")
-  userId       String   @map("user_id")
-  member_since DateTime @default(now()) @map("member_since")
+  room        Room     @relation(fields: [roomId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  roomId      String   @map("room_id")
+  userId      String   @map("user_id")
+  memberSince DateTime @default(now()) @map("member_since")
 
   @@id([roomId, userId])
   @@map("users_on_rooms")

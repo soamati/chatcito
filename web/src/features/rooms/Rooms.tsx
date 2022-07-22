@@ -54,7 +54,7 @@ export const Rooms = () => {
 
               <Stack spacing={0} align="end">
                 <Group spacing="xs">
-                  <Text color={colors.green[4]}>{room._count.members}</Text>
+                  <Text color={colors.green[4]}>{room._count.members + 1}</Text>
                   <User size={16} color={colors.green[4]} />
                 </Group>
                 <Group spacing="xs">

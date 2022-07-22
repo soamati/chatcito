@@ -1,4 +1,4 @@
-import { formatDistanceToNowStrict, sub } from 'date-fns';
+import { format, formatDistanceToNowStrict, sub } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 export function fromNow(isoDate: string | Date) {
@@ -6,4 +6,8 @@ export function fromNow(isoDate: string | Date) {
     addSuffix: true,
     locale: es,
   });
+}
+
+export function parseDate(isoDate: string | Date) {
+  return format(new Date(isoDate), 'dd/MM/yy', { locale: es });
 }

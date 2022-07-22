@@ -85,3 +85,19 @@ export function useUpdateRoom() {
 
   return [mutate, isLoading] as const;
 }
+
+export function useLeaveRoom() {
+  const router = useRouter();
+  const roomId = useRoomId();
+
+  const { mutate, isLoading } = useMutation(
+    () => trpc.mutation('room.leave', { roomId }),
+    {
+      onSuccess() {
+        router.push('/home');
+      },
+    }
+  );
+
+  return [mutate, isLoading] as const;
+}

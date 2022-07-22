@@ -14,9 +14,16 @@ export const rooms = createProtectedRouter()
             { members: { some: { userId: user.id } } },
           ],
         },
+        include: {
+          chats: { take: 1, orderBy: { createdAt: 'desc' } },
+          _count: { select: { chats: true, members: true } },
+        },
       });
 
-      return rooms;
+      return rooms.map((room) => ({
+        ...room,
+        isOwner: user.id === room.ownerId,
+      }));
     },
   })
   .query('byId', {
@@ -102,5 +109,18 @@ export const rooms = createProtectedRouter()
       if (userOnRoom) return permissions;
 
       throw new Error('No estás en la sala');
+    },
+  })
+  .mutation('update', {
+    input: z.object({ id: z.string(), name: z.string() }),
+    async resolve({ ctx: { prisma }, input }) {
+      const { id, name } = input;
+
+      const updated = await prisma.room.update({
+        where: { id },
+        data: { name },
+      });
+
+      return updated;
     },
   });

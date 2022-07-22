@@ -1,5 +1,5 @@
 import type { AppRouter as _AppRouter } from '../../server/src/router';
-import { inferProcedureOutput } from '@trpc/server';
+import { inferProcedureOutput, inferProcedureInput } from '@trpc/server';
 
 // tRPC types
 
@@ -12,6 +12,9 @@ export type TMutation = keyof TAppRouter['_def']['mutations'];
 export type InferQueryOutput<TRouteKey extends TQuery> = inferProcedureOutput<
   TAppRouter['_def']['queries'][TRouteKey]
 >;
+
+export type InferMutationInput<TRouteKey extends TMutation> =
+  inferProcedureInput<TAppRouter['_def']['mutations'][TRouteKey]>;
 
 // Utility types
 

@@ -5,65 +5,67 @@ import {
   Stack,
   Text,
   Title,
-  Box,
-  createStyles,
-  Divider,
+  Paper,
+  useMantineTheme,
+  Badge,
 } from '@mantine/core';
-import { Rocket } from 'tabler-icons-react';
+import { MessageCircle, Rocket, User } from 'tabler-icons-react';
 import { useRooms } from './queries';
 import Link from 'next/link';
 
-const useStyles = createStyles((theme) => ({
-  badge: {
-    backgroundColor: theme.colors.red[8],
-    borderRadius: '100%',
-    aspectRatio: '1 / 1',
-    height: '1.25rem',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-}));
-
 export const Rooms = () => {
-  const { classes } = useStyles();
   const [rooms] = useRooms();
+  const { colors } = useMantineTheme();
 
   if (!rooms) return null;
 
   return (
-    <div>
+    <Stack m="xs" spacing="xs">
       {rooms.map((room) => (
-        <div key={room.id}>
+        <Paper key={room.id} withBorder>
           <Link href={`/rooms/${room.id}`} passHref>
-            <Group py="xs" px="sm" position="apart" sx={{ cursor: 'pointer' }}>
-              <Group spacing="xs">
+            <Group
+              py="xs"
+              px="sm"
+              position="apart"
+              sx={{ cursor: 'pointer' }}
+              noWrap
+            >
+              <Group spacing="xs" noWrap>
                 <Avatar color="blue" radius="xl">
                   <Rocket />
                 </Avatar>
                 <div>
-                  <Title order={4}>{room.name}</Title>
-                  <Text>No hay mensajes</Text>
+                  <Group spacing="xs">
+                    <Title order={4}>{room.name}</Title>
+                    {room.isOwner && (
+                      <Badge size="sm" color="red">
+                        admin
+                      </Badge>
+                    )}
+                  </Group>
+                  <Text lineClamp={1} color="gray">
+                    {room.chats.length > 0
+                      ? room.chats[0].content
+                      : 'No hay mensajes'}
+                  </Text>
                 </div>
               </Group>
 
-              <Stack spacing={4} align="end">
-                {/* Last message time */}
-                <Text size="sm">11:20 AM</Text>
-
-                {/* Unread messages count */}
-                <Box className={classes.badge}>
-                  <Text size="xs" weight="bold">
-                    10
-                  </Text>
-                </Box>
+              <Stack spacing={0} align="end">
+                <Group spacing="xs">
+                  <Text color={colors.green[4]}>{room._count.members}</Text>
+                  <User size={16} color={colors.green[4]} />
+                </Group>
+                <Group spacing="xs">
+                  <Text color={colors.blue[4]}>{room._count.chats}</Text>
+                  <MessageCircle size={16} color={colors.blue[4]} />
+                </Group>
               </Stack>
             </Group>
           </Link>
-          <Divider />
-        </div>
+        </Paper>
       ))}
-    </div>
+    </Stack>
   );
 };

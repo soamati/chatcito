@@ -7,11 +7,12 @@ export const CreateRoomButton = () => {
   const { mutate, isLoading } = useCreateRoom();
 
   return (
-    <Affix position={{ bottom: 100, right: 18 }}>
+    <Affix position={{ bottom: 96, right: 18 }}>
       <Button
         leftIcon={<Rocket />}
         onClick={() => mutate()}
         loading={isLoading}
+        radius="lg"
       >
         Nueva
       </Button>

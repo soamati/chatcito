@@ -99,6 +99,6 @@ export const invitations = createProtectedRouter()
 
       await prisma.$transaction([userOnRoom, deleteInvitation]);
 
-      return true;
+      return roomId;
     },
   });

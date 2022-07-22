@@ -1,15 +1,18 @@
 import React from 'react';
-import { Button, Menu } from '@mantine/core';
-import { MoodSmile, UserPlus } from 'tabler-icons-react';
-import { ExcludeNull, InferQueryOutput } from '../../types';
+import { ActionIcon, Menu } from '@mantine/core';
+import { MoodSmile, Pencil, Settings, UserPlus } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
+import { useBoolean } from '../../hooks/useBoolean';
+import { Room } from './types';
+import { ChangeNameModal } from './ChangeNameModal';
 
 type Props = {
-  room: ExcludeNull<InferQueryOutput<'room.byId'>>;
+  room: Room;
 };
 
 export const RoomMenu = ({ room }: Props) => {
   const router = useRouter();
+  const { value: opened, off, toggle } = useBoolean(false);
 
   const handleRedirect = React.useCallback(
     (destination: string) => {
@@ -19,26 +22,34 @@ export const RoomMenu = ({ room }: Props) => {
   );
 
   return (
-    <Menu
-      mr="xs"
-      control={
-        <Button variant="subtle" size="md" compact>
-          Menú
-        </Button>
-      }
-    >
-      <Menu.Item
-        icon={<MoodSmile size={14} />}
-        onClick={() => handleRedirect('/members')}
+    <>
+      <Menu
+        mr="xs"
+        control={
+          <ActionIcon variant="hover" color="gray">
+            <Settings />
+          </ActionIcon>
+        }
       >
-        Miembros
-      </Menu.Item>
-      <Menu.Item
-        icon={<UserPlus size={14} />}
-        onClick={() => handleRedirect('/invite')}
-      >
-        Invitar
-      </Menu.Item>
-    </Menu>
+        <Menu.Item icon={<Pencil size={14} />} onClick={toggle}>
+          Cambiar nombre
+        </Menu.Item>
+        <Menu.Item
+          icon={<MoodSmile size={14} />}
+          onClick={() => handleRedirect('/members')}
+        >
+          Miembros
+        </Menu.Item>
+        <Menu.Item
+          icon={<UserPlus size={14} />}
+          onClick={() => handleRedirect('/invite')}
+          color="teal"
+        >
+          Invitar
+        </Menu.Item>
+      </Menu>
+
+      <ChangeNameModal room={room} isOpen={opened} onClose={off} />
+    </>
   );
 };

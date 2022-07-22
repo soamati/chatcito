@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { trpc } from '../../lib/trpc';
@@ -31,12 +32,13 @@ export function useReceivedInvitations() {
 
 export function useAccept() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { mutate, isLoading } = useMutation(
     (invitationId: string) =>
       trpc.mutation('invitation.accept', { invitationId }),
     {
-      onSuccess(_, invitationId) {
+      onSuccess(roomId, invitationId) {
         queryClient.setQueryData<TReceivedInvitation[]>(
           ['invitations'],
           (prev) => {
@@ -45,6 +47,8 @@ export function useAccept() {
             return prev.filter((invitation) => invitation.id !== invitationId);
           }
         );
+
+        router.push(`/rooms/${roomId}`);
       },
     }
   );

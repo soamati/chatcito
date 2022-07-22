@@ -1,9 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { trpc } from '../../lib/trpc';
 import { useRoomId } from './useRoomId';
 import { useJoinRoom } from './useJoinRoom';
+import { InferMutationInput } from '../../types';
+import { Room } from './types';
 
 export function useCreateRoom() {
   const router = useRouter();
@@ -54,4 +56,32 @@ export function useChats() {
   });
 
   return [data, isLoading] as const;
+}
+
+export function useUpdateRoom() {
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(
+    ({ id, name }: InferMutationInput<'room.update'>) =>
+      trpc.mutation('room.update', { id, name }),
+    {
+      onSuccess(updated) {
+        let shouldInvalidate = false;
+
+        queryClient.setQueryData<Room | null>(['rooms', updated.id], (old) => {
+          if (!old) {
+            shouldInvalidate = true;
+            return null;
+          }
+          return { ...old, ...updated };
+        });
+
+        if (!shouldInvalidate) return;
+
+        queryClient.invalidateQueries(['rooms', updated.id]);
+      },
+    }
+  );
+
+  return [mutate, isLoading] as const;
 }

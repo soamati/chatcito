@@ -13,14 +13,7 @@ export const Header = ({ title = 'Chatcito', Side }: Props) => {
   const router = useRouter();
 
   return (
-    <Paper
-      sx={{
-        position: 'fixed',
-        width: '100%',
-        zIndex: 1,
-      }}
-      withBorder
-    >
+    <Paper withBorder radius={0} sx={{ borderBottom: 'none' }}>
       <Group p="xs" sx={{ minHeight: '64px' }} position="apart" noWrap>
         <Group spacing="xs" noWrap>
           <ActionIcon>

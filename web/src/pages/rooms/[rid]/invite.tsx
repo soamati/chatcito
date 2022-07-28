@@ -1,11 +1,9 @@
 import React from 'react';
-import { Box, Stack } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { Loader } from '../../../components/Loader';
 import { useFriends } from '../../../features/friendships/queries';
 import { InviteItem } from '../../../features/invitations/InviteItem';
 import { useRoom } from '../../../features/rooms/queries';
-import { BottomNav } from '../../../layouts/BottomNav';
-import { Header } from '../../../layouts/Header';
 import { Page } from '../../../layouts/Page';
 import { withAuthGSSP } from '../../../utils/withAuthGSSP';
 import { GoBack } from '../../../components/GoBack';
@@ -24,43 +22,31 @@ const InvitePage = () => {
 
   if (!room) {
     return (
-      <>
-        <Page>
-          <GoBack message="La sala no existe" />
-        </Page>
-        <BottomNav />
-      </>
+      <Page>
+        <GoBack message="La sala no existe" />
+      </Page>
     );
   }
 
   if (!room.isOwner) {
     return (
-      <>
-        <Page>
-          <GoBack
-            message="Solo el dueño de la sala puede enviar invitaciones"
-            goBack={`/rooms/${room.id}`}
-          />
-        </Page>
-        <BottomNav />
-      </>
+      <Page>
+        <GoBack
+          message="Solo el dueño de la sala puede enviar invitaciones"
+          goBack={`/rooms/${room.id}`}
+        />
+      </Page>
     );
   }
 
   return (
-    <>
-      <Header title={`Invitar a ${room.name}`} />
-      <Page>
-        <Box py={64}>
-          <Stack m="md">
-            {friends.map((friend) => (
-              <InviteItem key={friend.id} friend={friend} />
-            ))}
-          </Stack>
-        </Box>
-      </Page>
-      <BottomNav />
-    </>
+    <Page headerTitle={`Invitar a ${room.name}`}>
+      <Stack mt="xs" spacing="xs">
+        {friends.map((friend) => (
+          <InviteItem key={friend.id} friend={friend} />
+        ))}
+      </Stack>
+    </Page>
   );
 };
 

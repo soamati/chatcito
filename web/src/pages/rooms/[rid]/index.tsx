@@ -2,18 +2,26 @@ import React from 'react';
 import { NextPage } from 'next';
 import { useRoom } from '../../../features/rooms/queries';
 import { Page } from '../../../layouts/Page';
-import { Header } from '../../../layouts/Header';
-import { Box, Center, Text } from '@mantine/core';
+import { Box, Center, ScrollArea, Text } from '@mantine/core';
 import { ChatInput } from '../../../features/rooms/ChatInput';
 import { Chats } from '../../../features/rooms/Chats';
 import { withAuthGSSP } from '../../../utils/withAuthGSSP';
 import { Loader } from '../../../components/Loader';
-import { BottomNav } from '../../../layouts/BottomNav';
-import { RoomMenu } from '../../../features/rooms/RoomMenu';
 import { GoBack } from '../../../components/GoBack';
+import { useJoinRoom } from '../../../features/rooms/useJoinRoom';
+import { useScroll } from '../../../hooks/useScroll';
+import { RoomMenu } from '../../../features/rooms/RoomMenu';
 
 const RoomPage: NextPage = () => {
-  const { room, isLoading, isJoined } = useRoom();
+  const { ref, toBottom } = useScroll();
+  const { room, isLoading } = useRoom();
+  const { join, isJoined } = useJoinRoom();
+
+  React.useEffect(() => {
+    if (!room) return;
+
+    join(room.id);
+  }, [room, join]);
 
   if (isLoading) {
     return (
@@ -25,12 +33,9 @@ const RoomPage: NextPage = () => {
 
   if (!room) {
     return (
-      <>
-        <Page>
-          <GoBack message="La sala no existe" />
-        </Page>
-        <BottomNav />
-      </>
+      <Page>
+        <GoBack message="La sala no existe" />
+      </Page>
     );
   }
 
@@ -45,9 +50,11 @@ const RoomPage: NextPage = () => {
   }
 
   return (
-    <Page>
-      <Header title={room.name} Side={<RoomMenu room={room} />} />
-
+    <Page
+      headerTitle={room.name}
+      HeaderSide={<RoomMenu room={room} />}
+      showBottomNav={false}
+    >
       <Box
         sx={{
           height: '100%',
@@ -55,10 +62,15 @@ const RoomPage: NextPage = () => {
           display: 'flex',
           flexDirection: 'column',
         }}
-        py={64}
       >
-        <Box sx={{ flex: 1 }}>
-          <Chats />
+        <Box sx={{ flex: 1, position: 'relative' }}>
+          <ScrollArea
+            scrollbarSize={8}
+            style={{ position: 'absolute', inset: 0 }}
+            viewportRef={ref}
+          >
+            <Chats scrollToBottom={toBottom} />
+          </ScrollArea>
         </Box>
 
         <ChatInput />

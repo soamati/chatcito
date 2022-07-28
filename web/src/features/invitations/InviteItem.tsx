@@ -12,7 +12,7 @@ export const InviteItem = ({ friend }: Props) => {
   const [invite, isInviting] = useInvite();
 
   return (
-    <Paper px="md" py="xs" withBorder>
+    <Paper px="md" py="xs" withBorder radius={0}>
       <Group position="apart">
         <UserPreview user={friend} />
         <Button

@@ -13,14 +13,14 @@ export const FriendRequests = () => {
 
   if (!possibleFriends.length) {
     return (
-      <Center sx={{ height: '100%' }}>
+      <Center pt="xl">
         <Text>No hay solicitudes</Text>
       </Center>
     );
   }
 
   return (
-    <Stack m="md">
+    <Stack mt="xs" spacing="xs">
       {possibleFriends.map((friend) => (
         <PossibleFriend key={friend.id} user={friend} />
       ))}

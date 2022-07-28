@@ -19,8 +19,8 @@ export const MemberList = ({ isOwner, owner }: Props) => {
   }
 
   return (
-    <Stack m="md">
-      <Paper withBorder p="xs">
+    <Stack mt="xs" spacing="xs">
+      <Paper withBorder p="xs" radius={0}>
         <Group position="apart">
           <UserPreview user={owner} />
           <Badge size="sm" color="green">

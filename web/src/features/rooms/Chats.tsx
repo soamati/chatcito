@@ -1,32 +1,30 @@
 import React from 'react';
 import { Stack } from '@mantine/core';
 import { useChats } from './queries';
-import { useScrollIntoView } from '@mantine/hooks';
-import { Loader } from '../../components/Loader';
 import { ChatItem } from './ChatItem';
 import { useAuthUser } from '../../hooks/useAuthUser';
 
-export const Chats = () => {
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
-    duration: 0,
-  });
+type Props = {
+  scrollToBottom: () => void;
+};
+
+export const Chats = ({ scrollToBottom }: Props) => {
   const [chats] = useChats();
   const [user] = useAuthUser();
 
   React.useLayoutEffect(() => {
-    scrollIntoView();
-  }, [chats?.length, scrollIntoView]);
+    scrollToBottom();
+  }, [chats?.length, scrollToBottom]);
 
   if (!chats || !user) {
-    return <Loader />;
+    return null;
   }
 
   return (
-    <Stack pt="xs" px="sm">
+    <Stack pt="xs" px="md">
       {chats.map((chat) => (
         <ChatItem key={chat.id} chat={chat} isMe={chat.sender.id === user.id} />
       ))}
-      <div ref={targetRef} />
     </Stack>
   );
 };

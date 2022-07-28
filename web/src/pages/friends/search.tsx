@@ -1,31 +1,40 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { Page } from '../../layouts/Page';
-import { Header } from '../../layouts/Header';
 import { useAllUsers } from '../../features/users/queries';
-import { Box, Stack } from '@mantine/core';
-import { BottomNav } from '../../layouts/BottomNav';
+import { Input, Stack } from '@mantine/core';
 import { PossibleFriend } from '../../features/friendships/PossibleFriend';
+import { InferQueryOutput } from '../../types';
+import { useFilter } from '../../hooks/useFilter';
+
+type User = InferQueryOutput<'user.all'>[number];
+
+function filterUsers(filter: string) {
+  return (user: User) => {
+    return user.name.toLowerCase().includes(filter);
+  };
+}
 
 const SearchPage: NextPage = () => {
   const [users] = useAllUsers();
 
+  const { filtered, getInputProps } = useFilter(users, filterUsers);
+
   return (
-    <>
-      <Header title="Buscar amigos" />
-
-      <Page>
-        <Box py={64}>
-          <Stack m="md">
-            {users?.map((user) => (
-              <PossibleFriend key={user.id} user={user} />
-            ))}
-          </Stack>
-        </Box>
-      </Page>
-
-      <BottomNav />
-    </>
+    <Page headerTitle="Buscar amigos">
+      <Stack mt="xs" spacing="xs">
+        <Input
+          placeholder="Busca por nombre..."
+          size="md"
+          variant="filled"
+          radius={0}
+          {...getInputProps()}
+        />
+        {filtered.map((user) => (
+          <PossibleFriend key={user.id} user={user} />
+        ))}
+      </Stack>
+    </Page>
   );
 };
 

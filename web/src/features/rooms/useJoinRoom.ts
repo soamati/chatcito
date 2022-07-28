@@ -1,20 +1,18 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useSocket } from '../../context/SocketProvider';
 
 export function useJoinRoom() {
   const [isJoined, setInJoined] = React.useState(false);
   const socket = useSocket();
-  const router = useRouter();
 
-  const join = React.useCallback(() => {
-    const rid = router.query.rid;
-    if (typeof rid !== 'string') return;
-
-    socket.emit('room:join', rid, () => {
-      setInJoined(true);
-    });
-  }, [socket, router]);
+  const join = React.useCallback(
+    (rid: string) => {
+      socket.emit('room:join', rid, () => {
+        setInJoined(true);
+      });
+    },
+    [socket]
+  );
 
   return { join, isJoined };
 }

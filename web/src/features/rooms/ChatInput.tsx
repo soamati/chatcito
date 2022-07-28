@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Group, Textarea, Button } from '@mantine/core';
+import { Group, Textarea, Button } from '@mantine/core';
 import { useChat } from './useChat';
 
 export const ChatInput = () => {
@@ -37,22 +37,21 @@ export const ChatInput = () => {
   );
 
   return (
-    <Paper withBorder p="xs" sx={{ position: 'fixed', inset: 'auto 0 0 0' }}>
-      <Group>
-        <Textarea
-          sx={{ flex: 1 }}
-          minRows={1}
-          variant="unstyled"
-          autosize
-          maxRows={3}
-          value={chat}
-          onChange={onChange}
-          onKeyDown={handleEnter}
-        />
-        <Button variant="subtle" uppercase size="xs">
-          Enviar
-        </Button>
-      </Group>
-    </Paper>
+    <Group p="xs">
+      <Textarea
+        sx={{ flex: 1 }}
+        minRows={1}
+        variant="unstyled"
+        autosize
+        maxRows={3}
+        value={chat}
+        onChange={onChange}
+        onKeyDown={handleEnter}
+        placeholder="Escribí un mensaje..."
+      />
+      <Button variant="light" uppercase size="xs">
+        Enviar
+      </Button>
+    </Group>
   );
 };

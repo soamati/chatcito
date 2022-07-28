@@ -1,15 +1,12 @@
-import { Box } from '@mantine/core';
 import React from 'react';
 import { GoBack } from '../../../components/GoBack';
 import { Loader } from '../../../components/Loader';
 import { MemberList } from '../../../features/members/MemberList';
 import { useRoom } from '../../../features/rooms/queries';
-import { BottomNav } from '../../../layouts/BottomNav';
-import { Header } from '../../../layouts/Header';
 import { Page } from '../../../layouts/Page';
-import { withAuthGSSP, WithUserProps } from '../../../utils/withAuthGSSP';
+import { withAuthGSSP } from '../../../utils/withAuthGSSP';
 
-const MembersPage = ({ user }: WithUserProps<{}>) => {
+const MembersPage = () => {
   const { room, isLoading } = useRoom();
 
   if (isLoading) {
@@ -22,27 +19,16 @@ const MembersPage = ({ user }: WithUserProps<{}>) => {
 
   if (!room) {
     return (
-      <>
-        <Page>
-          <GoBack message="La sala no existe" />
-        </Page>
-        <BottomNav />
-      </>
+      <Page>
+        <GoBack message="La sala no existe" />
+      </Page>
     );
   }
 
   return (
-    <>
-      <Header title={`Integrantes de ${room.name}`} />
-
-      <Page>
-        <Box py={64} sx={{ height: '100%' }}>
-          <MemberList owner={room.owner} isOwner={room.isOwner} />
-        </Box>
-      </Page>
-
-      <BottomNav />
-    </>
+    <Page headerTitle={`Integrantes de ${room.name}`}>
+      <MemberList owner={room.owner} isOwner={room.isOwner} />
+    </Page>
   );
 };
 

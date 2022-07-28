@@ -1,12 +1,6 @@
 import React from 'react';
 import { Box, Group, Stack, ActionIcon, Text, Paper } from '@mantine/core';
-import {
-  MessageCircle,
-  Rocket,
-  HeartPlus,
-  User,
-  Icon,
-} from 'tabler-icons-react';
+import { Rocket, HeartPlus, User, Icon } from 'tabler-icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -46,7 +40,7 @@ const NavItem = ({ Icon, to, label }: NavItemProps) => {
   );
 };
 
-export const BottomNav = () => {
+export const MobileNav = () => {
   return (
     <Box
       sx={{
@@ -56,9 +50,8 @@ export const BottomNav = () => {
     >
       <Paper radius={0} shadow="sm" withBorder>
         <Group position="apart" px="xl" py="xs">
-          <NavItem Icon={MessageCircle} label="Chats" to="/home" />
           <NavItem Icon={Rocket} label="Salas" to="/rooms" />
-          <NavItem Icon={HeartPlus} label="Amigos" to="/friends/search" />
+          <NavItem Icon={HeartPlus} label="Amigos" to="/friends" />
           <NavItem Icon={User} label="Perfil" to="/profile" />
         </Group>
       </Paper>

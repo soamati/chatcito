@@ -17,7 +17,7 @@ export const MemberItem = ({
   const [kick, isKicking] = useKick();
 
   return (
-    <Paper key={user.id} withBorder p="xs">
+    <Paper key={user.id} withBorder p="xs" radius={0}>
       <Group position="apart">
         <div>
           <UserPreview user={user} />

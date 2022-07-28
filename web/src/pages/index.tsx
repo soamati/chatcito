@@ -19,6 +19,7 @@ const Home: NextPage = () => {
           </Stack>
         </Paper>
       </Center>
+
       <Group position="center" p="md">
         <Title order={2}>chatcito</Title>
       </Group>

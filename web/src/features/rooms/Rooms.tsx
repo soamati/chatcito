@@ -20,9 +20,9 @@ export const Rooms = () => {
   if (!rooms) return null;
 
   return (
-    <Stack m="xs" spacing="xs">
+    <Stack spacing="xs" mt="xs">
       {rooms.map((room) => (
-        <Paper key={room.id} withBorder>
+        <Paper key={room.id} withBorder radius={0}>
           <Link href={`/rooms/${room.id}`} passHref>
             <Group
               py="xs"
@@ -39,7 +39,7 @@ export const Rooms = () => {
                   <Group spacing="xs">
                     <Title order={4}>{room.name}</Title>
                     {room.isOwner && (
-                      <Badge size="sm" color="red">
+                      <Badge size="sm" color="teal">
                         admin
                       </Badge>
                     )}

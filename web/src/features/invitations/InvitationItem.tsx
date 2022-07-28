@@ -12,7 +12,7 @@ export const InvitationItem = ({ invitation }: Props) => {
   const [reject, isRejecting] = useReject();
 
   return (
-    <Paper p="xs" withBorder>
+    <Paper p="xs" withBorder radius={0}>
       <Stack spacing="xs">
         <Text>
           <Text component="span" color="blue">

@@ -50,27 +50,27 @@ export const PossibleFriend = ({ user }: Props) => {
   };
 
   return (
-    <Paper withBorder key={user.id}>
+    <Paper withBorder key={user.id} radius={0}>
       <Group p="xs" position="apart">
         <UserPreview user={user} />
         {!friendship ? (
-          <Button variant="subtle" onClick={handleSend} loading={isSending}>
+          <Button compact onClick={handleSend} loading={isSending}>
             Agregar
           </Button>
         ) : (
           <>
             {friendship.status === 'ACCEPTED' ? (
-              <Text mr="lg" size="sm" weight="bold" color="gray">
+              <Text mr="xs" size="sm">
                 Amigos
               </Text>
             ) : (
               <>
                 {friendship.isSender ? (
                   <Button
-                    variant="subtle"
                     color="red"
                     onClick={handleCancel}
                     loading={isCanceling}
+                    compact
                   >
                     Cancelar
                   </Button>
@@ -80,6 +80,7 @@ export const PossibleFriend = ({ user }: Props) => {
                       variant="subtle"
                       onClick={handleAccept}
                       loading={isAccepting}
+                      compact
                     >
                       Aceptar
                     </Button>
@@ -88,6 +89,7 @@ export const PossibleFriend = ({ user }: Props) => {
                       color="red"
                       onClick={handleCancel}
                       loading={isCanceling}
+                      compact
                     >
                       Rechazar
                     </Button>

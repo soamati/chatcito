@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String  @id
+  name  String
+  image String?
+  rooms Room[]
+  chats Chat[]
+
+  // Friendships
+  senderFriendships   Friendship[] @relation("SenderFriendships")
+  receiverFriendships Friendship[] @relation("ReceiverFriendships")
+
+  // Invitations
+  senderInvitations Invitation[] @relation("SenderInvitations")
+  targetInvitations Invitation[] @relation("TargetInvitations")
+
+  // UsersOnRooms relation table
+  guestRooms UsersOnRooms[]
+
+  @@map("user")
+}
+
+model Room {
+  id          String       @id @default(uuid())
+  name        String
+  createdAt   DateTime     @default(now()) @map("created_at")
+  owner       User         @relation(fields: [ownerId], references: [id])
+  ownerId     String       @map("owner_id")
+  chats       Chat[]
+  invitations Invitation[]
+
+  // UsersOnRooms relation table
+  members UsersOnRooms[]
+
+  @@map("room")
+}
+
+model Chat {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String   @map("sender_id")
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String   @map("room_id")
+
+  @@map("chat")
+}
+
+enum FriendshipStatus {
+  PENDING  @map("pendiente")
+  ACCEPTED @map("aceptada")
+  BANNED   @map("bloqueada")
+
+  @@map("friendship_status_enum")
+}
+
+model Friendship {
+  sender     User             @relation(name: "SenderFriendships", fields: [senderId], references: [id])
+  senderId   String           @map("sender_id")
+  receiver   User             @relation(name: "ReceiverFriendships", fields: [receiverId], references: [id])
+  receiverId String           @map("receiver_id")
+  status     FriendshipStatus @default(PENDING)
+  createdAt  DateTime         @default(now()) @map("created_at")
+
+  @@id([senderId, receiverId])
+  @@map("friendship")
+}
+
+model Invitation {
+  id        String   @id @default(uuid())
+  sender    User     @relation(name: "SenderInvitations", fields: [senderId], references: [id])
+  senderId  String   @map("sender_id")
+  target    User     @relation(name: "TargetInvitations", fields: [targetId], references: [id])
+  targetId  String   @map("target_id")
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String   @map("room_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([senderId, targetId, roomId])
+  @@map("invitation")
+}
+
+model UsersOnRooms {
+  room        Room     @relation(fields: [roomId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  roomId      String   @map("room_id")
+  userId      String   @map("user_id")
+  memberSince DateTime @default(now()) @map("member_since")
+
+  @@id([roomId, userId])
+  @@map("users_on_rooms")
+}

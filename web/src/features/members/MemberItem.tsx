@@ -1,12 +1,12 @@
 import React from 'react';
 import { Paper, Group, Button, Text } from '@mantine/core';
-import { UserPreview } from '../../components/UserPreview';
-import { parseDate } from '../../utils/date';
-import { Member } from './types';
 import { useKick } from './queries';
+import { UserPreview } from '@/components/UserPreview';
+import { parseDate } from '@/utils/date';
+import { UserRoomRelation } from '@/types';
 
 type Props = {
-  member: Member;
+  member: UserRoomRelation;
   isOwner: boolean;
 };
 

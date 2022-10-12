@@ -1,11 +1,9 @@
 import React from 'react';
-import { useSocket } from '../../context/SocketProvider';
-import { useAuthUser } from '../../hooks/useAuthUser';
-import { InferQueryOutput } from '../../types';
+import { useSocket } from '@/context/SocketProvider';
 import { useQueryClient } from 'react-query';
 import { useRoomId } from './useRoomId';
-
-type Chat = InferQueryOutput<'room.chats'>[number];
+import { useAuthUser } from '@/hooks/useAuthUser';
+import { Chat } from '@/types';
 
 export function useChat() {
   const socket = useSocket();

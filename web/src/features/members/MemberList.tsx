@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Center, Group, Loader, Paper, Stack } from '@mantine/core';
+import { Badge, Group, Paper, Stack } from '@mantine/core';
 import { User } from '@/types';
 import { UserPreview } from '@/components/UserPreview';
 import { MemberItem } from './MemberItem';

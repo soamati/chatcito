@@ -1,7 +1,6 @@
 import { showNotification } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { TReceivedInvitation } from './types';
 import { useRoomId } from '@/features/rooms/useRoomId';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import api from '@/api';
@@ -47,14 +46,11 @@ export function useAccept() {
       api.post<{ roomId: string }>(`/invitations/accept/${invitationId}`),
     {
       onSuccess({ roomId }, invitationId) {
-        queryClient.setQueryData<TReceivedInvitation[]>(
-          ['invitations'],
-          (prev) => {
-            if (!prev) return [];
+        queryClient.setQueryData<Invitation[]>(['invitations'], (prev) => {
+          if (!prev) return [];
 
-            return prev.filter((invitation) => invitation.id !== invitationId);
-          }
-        );
+          return prev.filter((invitation) => invitation.id !== invitationId);
+        });
 
         router.push(`/rooms/${roomId}`);
       },
@@ -71,14 +67,11 @@ export function useReject() {
     (invitationId: string) => api.delete(`/invitations/${invitationId}`),
     {
       onSuccess(_, invitationId) {
-        queryClient.setQueryData<TReceivedInvitation[]>(
-          ['invitations'],
-          (prev) => {
-            if (!prev) return [];
+        queryClient.setQueryData<Invitation[]>(['invitations'], (prev) => {
+          if (!prev) return [];
 
-            return prev.filter((invitation) => invitation.id !== invitationId);
-          }
-        );
+          return prev.filter((invitation) => invitation.id !== invitationId);
+        });
       },
     }
   );

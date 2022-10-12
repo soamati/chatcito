@@ -1,10 +1,10 @@
 import React from 'react';
 import { Group, Text } from '@mantine/core';
 import { Avatar } from './Avatar';
-import { ExcludeNull, InferQueryOutput } from '../types';
+import { User } from '@/types';
 
 type Props = {
-  user: ExcludeNull<InferQueryOutput<'user.auth'>>;
+  user: User;
 };
 
 export const UserPreview = ({ user }: Props) => {

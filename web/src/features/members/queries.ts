@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Member } from './types';
 import { useRoomId } from '@/features/rooms/useRoomId';
 import api from '@/api';
 import { UserRoomRelation } from '@/types';
@@ -22,7 +21,7 @@ export function useKick() {
     (memberId: string) => api.post(`/rooms/${roomId}/kick/${memberId}`),
     {
       onSuccess(_, kickedId) {
-        queryClient.setQueryData<Member[]>(
+        queryClient.setQueryData<UserRoomRelation[]>(
           ['rooms', roomId, 'members'],
           (prev) => {
             if (!prev) return [];

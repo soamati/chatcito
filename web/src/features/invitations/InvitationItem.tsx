@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Group, Paper, Stack, Text } from '@mantine/core';
-import { InferQueryOutput } from '../../types';
 import { useAccept, useReject } from './queries';
+import { Invitation } from '@/types';
 
 type Props = {
-  invitation: InferQueryOutput<'invitation.received'>[number];
+  invitation: Invitation;
 };
 
 export const InvitationItem = ({ invitation }: Props) => {

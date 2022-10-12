@@ -33,7 +33,7 @@ export class AuthUserGuard implements CanActivate {
     const { id } = payload;
     const user = this.prisma.user.findFirst({
       where: { id },
-      select: { id: true, name: true },
+      select: { id: true, name: true, image: true },
     });
 
     if (!user) {

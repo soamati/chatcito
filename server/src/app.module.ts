@@ -9,6 +9,7 @@ import { TokenModule } from './token/token.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { FriendshipsModule } from './friendships/friendships.module';
 import { InvitationsModule } from './invitations/invitations.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { InvitationsModule } from './invitations/invitations.module';
     RoomsModule,
     FriendshipsModule,
     InvitationsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

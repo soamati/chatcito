@@ -8,7 +8,7 @@ import { TokenService } from './token.service';
   imports: [
     PrismaModule,
     JwtModule.register({
-      secret: 'secretKey',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
   ],

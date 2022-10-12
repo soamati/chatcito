@@ -35,7 +35,7 @@ export class AuthController {
     const token = this.authService.signin(req.user);
     res.cookie('chatcito-token', token, { httpOnly: true });
 
-    return res.redirect('http://localhost:3000/home');
+    return res.redirect(`${process.env.WEB}/home`);
   }
 
   @Post('logout')

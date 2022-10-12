@@ -14,13 +14,13 @@ import { withAuthGSSP } from '@/utils/withAuthGSSP';
 const RoomPage: NextPage = () => {
   const { ref, toBottom } = useScroll();
   const { room, isLoading } = useRoom();
-  // const { join, isJoined } = useJoinRoom();
+  const { join, isJoined } = useJoinRoom();
 
-  // React.useEffect(() => {
-  //   if (!room) return;
+  React.useEffect(() => {
+    if (!room) return;
 
-  //   join(room.id);
-  // }, [room, join]);
+    join(room.id);
+  }, [room, join]);
 
   if (isLoading) {
     return (
@@ -40,15 +40,15 @@ const RoomPage: NextPage = () => {
     );
   }
 
-  // if (!isJoined) {
-  //   return (
-  //     <Page>
-  //       <Center sx={{ height: '100%' }}>
-  //         <Text>Uniéndose</Text>
-  //       </Center>
-  //     </Page>
-  //   );
-  // }
+  if (!isJoined) {
+    return (
+      <Page>
+        <Center sx={{ height: '100%' }}>
+          <Text>Uniéndose</Text>
+        </Center>
+      </Page>
+    );
+  }
 
   return (
     <Page

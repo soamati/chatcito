@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper, Group, Stack, Text, createStyles } from '@mantine/core';
-import { fromNow } from '../../utils/date';
-import { Chat } from './types';
-import { Avatar } from '../../components/Avatar';
+import { fromNow } from '@/utils/date';
+import { Chat } from '@/types';
+import { Avatar } from '@/components/Avatar';
 
 type Props = {
   chat: Chat;

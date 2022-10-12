@@ -2,7 +2,7 @@ import { format, formatDistanceToNowStrict, sub } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 export function fromNow(isoDate: string | Date) {
-  return formatDistanceToNowStrict(sub(new Date(isoDate), { seconds: 3 }), {
+  return formatDistanceToNowStrict(sub(new Date(isoDate), { seconds: 1 }), {
     addSuffix: true,
     locale: es,
   });

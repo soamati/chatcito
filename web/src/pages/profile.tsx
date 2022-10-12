@@ -1,9 +1,9 @@
 import React from 'react';
 import { Center, Stack, Text, Title } from '@mantine/core';
-import { Avatar } from '../components/Avatar';
-import { LogoutButton } from '../features/auth/LogoutButton';
-import { Page } from '../layouts/Page';
-import { withAuthGSSP, WithUserProps } from '../utils/withAuthGSSP';
+import { LogoutButton } from '@/features/auth/LogoutButton';
+import { Page } from '@/layouts/Page';
+import { WithUserProps, withAuthGSSP } from '@/utils/withAuthGSSP';
+import { Avatar } from '@/components/Avatar';
 
 const ProfilePage = ({ user }: WithUserProps<{}>) => {
   return (

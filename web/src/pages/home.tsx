@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { withAuthGSSP } from '../utils/withAuthGSSP';
-import { Page } from '../layouts/Page';
 import {
   Button,
   Center,
@@ -13,6 +11,7 @@ import {
   Title,
 } from '@mantine/core';
 import { Heart, MessageCircle, Rocket } from 'tabler-icons-react';
+import { Page } from '@/layouts/Page';
 
 const Home: NextPage = () => {
   return (
@@ -63,5 +62,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-export const getServerSideProps = withAuthGSSP();

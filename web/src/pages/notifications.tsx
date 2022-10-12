@@ -1,7 +1,6 @@
 import React from 'react';
-import { ReceivedInvitations } from '../features/invitations/ReceivedInvitations';
-import { Page } from '../layouts/Page';
-import { withAuthGSSP } from '../utils/withAuthGSSP';
+import { ReceivedInvitations } from '@/features/invitations/ReceivedInvitations';
+import { Page } from '@/layouts/Page';
 
 const NotificationsPage = () => {
   return (
@@ -12,5 +11,3 @@ const NotificationsPage = () => {
 };
 
 export default NotificationsPage;
-
-export const getServerSideProps = withAuthGSSP();

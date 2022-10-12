@@ -4,7 +4,6 @@ import { Mobile } from '@/components/Mobile';
 import { CreateRoomButton } from '@/features/rooms/CreateRoomButton';
 import { Rooms } from '@/features/rooms/Rooms';
 import { Page } from '@/layouts/Page';
-import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 const RoomsPage = () => {
   return (
@@ -23,5 +22,3 @@ const RoomsPage = () => {
 };
 
 export default RoomsPage;
-
-export const getServerSideProps = withAuthGSSP();

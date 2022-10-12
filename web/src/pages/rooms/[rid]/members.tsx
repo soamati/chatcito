@@ -3,7 +3,6 @@ import { GoBack } from '@/components/GoBack';
 import { MemberList } from '@/features/members/MemberList';
 import { useRoom } from '@/features/rooms/queries';
 import { Page } from '@/layouts/Page';
-import { withAuthGSSP } from '@/utils/withAuthGSSP';
 import { Center, Loader } from '@mantine/core';
 
 const MembersPage = () => {
@@ -37,5 +36,3 @@ const MembersPage = () => {
 };
 
 export default MembersPage;
-
-export const getServerSideProps = withAuthGSSP();

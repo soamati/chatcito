@@ -9,7 +9,6 @@ import { useRoom } from '@/features/rooms/queries';
 import { RoomMenu } from '@/features/rooms/RoomMenu';
 import { useJoinRoom } from '@/features/rooms/useJoinRoom';
 import { Page } from '@/layouts/Page';
-import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 const RoomPage: NextPage = () => {
   const { ref, toBottom } = useScroll();
@@ -81,5 +80,3 @@ const RoomPage: NextPage = () => {
 };
 
 export default RoomPage;
-
-export const getServerSideProps = withAuthGSSP();

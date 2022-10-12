@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { SocketProvider } from '../context/SocketProvider';
 import { NotificationsProvider } from '@mantine/notifications';
 import { useRouteChanging } from '../hooks/useRouteChanging';
+import { AuthGuard } from '@/context/AuthGuard';
 
 const queryClient = new QueryClient();
 
@@ -43,11 +44,13 @@ const App = ({ Component, pageProps }: AppProps) => {
             withNormalizeCSS
             theme={{ colorScheme }}
           >
-            <NotificationsProvider>
-              <SocketProvider>
-                <Component {...pageProps} />
-              </SocketProvider>
-            </NotificationsProvider>
+            <AuthGuard>
+              <NotificationsProvider>
+                <SocketProvider>
+                  <Component {...pageProps} />
+                </SocketProvider>
+              </NotificationsProvider>
+            </AuthGuard>
           </MantineProvider>
         </ColorSchemeProvider>
 

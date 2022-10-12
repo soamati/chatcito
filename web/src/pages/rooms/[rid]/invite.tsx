@@ -5,7 +5,6 @@ import { useFriends } from '@/features/friendships/queries';
 import { InviteItem } from '@/features/invitations/InviteItem';
 import { useRoom } from '@/features/rooms/queries';
 import { Page } from '@/layouts/Page';
-import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 const InvitePage = () => {
   const { room, isLoading } = useRoom();
@@ -52,5 +51,3 @@ const InvitePage = () => {
 };
 
 export default InvitePage;
-
-export const getServerSideProps = withAuthGSSP();

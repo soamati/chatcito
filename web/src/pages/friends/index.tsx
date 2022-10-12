@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Group } from '@mantine/core';
-import { FriendList } from '../../features/friendships/FriendList';
-import { Page } from '../../layouts/Page';
-import { withAuthGSSP } from '../../utils/withAuthGSSP';
 import Link from 'next/link';
+import { Button, Group } from '@mantine/core';
+import { FriendList } from '@/features/friendships/FriendList';
+import { Page } from '@/layouts/Page';
 
 const FriendsPage = () => {
   return (
@@ -24,5 +23,3 @@ const FriendsPage = () => {
 };
 
 export default FriendsPage;
-
-export const getServerSideProps = withAuthGSSP();

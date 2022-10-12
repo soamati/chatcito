@@ -2,10 +2,14 @@ import React from 'react';
 import { Center, Stack, Text, Title } from '@mantine/core';
 import { LogoutButton } from '@/features/auth/LogoutButton';
 import { Page } from '@/layouts/Page';
-import { WithUserProps, withAuthGSSP } from '@/utils/withAuthGSSP';
 import { Avatar } from '@/components/Avatar';
+import { useAuthUser } from '@/hooks/useAuthUser';
 
-const ProfilePage = ({ user }: WithUserProps<{}>) => {
+const ProfilePage = () => {
+  const [user] = useAuthUser();
+
+  if (!user) return null;
+
   return (
     <Page headerTitle="Perfil">
       <Center py="xl">
@@ -22,5 +26,3 @@ const ProfilePage = ({ user }: WithUserProps<{}>) => {
 };
 
 export default ProfilePage;
-
-export const getServerSideProps = withAuthGSSP();

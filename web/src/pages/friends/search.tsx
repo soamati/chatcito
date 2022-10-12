@@ -6,7 +6,6 @@ import { useFilter } from '@/hooks/useFilter';
 import { PossibleFriendItem } from '@/features/friendships/PossibleFriend';
 import { Page } from '@/layouts/Page';
 import { usePossibleFriends } from '@/features/friendships/queries';
-import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 function filterUsers(filter: string) {
   return (user: User) => {
@@ -38,5 +37,3 @@ const SearchPage: NextPage = () => {
 };
 
 export default SearchPage;
-
-export const getServerSideProps = withAuthGSSP();

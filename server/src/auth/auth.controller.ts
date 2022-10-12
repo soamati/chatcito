@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { cookieOptions } from './util';
 
 @Controller('auth')
 export class AuthController {
@@ -33,14 +34,17 @@ export class AuthController {
     }
 
     const token = this.authService.signin(req.user);
-    res.cookie('chatcito-token', token, { httpOnly: true });
+    const options = cookieOptions(req);
+    res.cookie('chatcito-token', token, options);
 
     return res.redirect(`${process.env.WEB}/home`);
   }
 
   @Post('logout')
-  logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('chatcito-token', { httpOnly: true });
+  logout(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
+    const options = cookieOptions(req);
+    res.clearCookie('chatcito-token', options);
+
     return { success: true };
   }
 }

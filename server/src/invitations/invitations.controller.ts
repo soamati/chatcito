@@ -41,10 +41,8 @@ export class InvitationsController {
       targetId,
       roomId,
     );
-    console.log({ error });
 
     if (error) {
-      console.log('throwing exc');
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

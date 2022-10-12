@@ -1,6 +1,6 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { FriendshipStatus, User } from '@prisma/client';
 import { Profile } from 'passport-google-oauth20';
 
 @Injectable()
@@ -42,7 +42,43 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findPossibleFriends(user: User) {
+    const usersWithFriendships = await this.prisma.user.findMany({
+      where: { id: { not: user?.id } },
+      include: {
+        senderFriendships: { where: { receiverId: user?.id } },
+        receiverFriendships: { where: { senderId: user?.id } },
+      },
+    });
+
+    const users = usersWithFriendships.map((_user) => {
+      const { senderFriendships, receiverFriendships, ...user } = _user;
+
+      const [senderFriendship] = senderFriendships;
+      const [receiverFriendship] = receiverFriendships;
+
+      let friendship: {
+        isSender: boolean;
+        status: FriendshipStatus;
+      } | null = null;
+
+      if (senderFriendship) {
+        friendship = {
+          isSender: false,
+          status: senderFriendship.status,
+        };
+      }
+
+      if (receiverFriendship) {
+        friendship = {
+          isSender: true,
+          status: receiverFriendship.status,
+        };
+      }
+
+      return { ...user, friendship };
+    });
+
+    return users;
   }
 }

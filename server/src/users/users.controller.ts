@@ -4,17 +4,16 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { UsersService } from './users.service';
 
+@UseGuards(AuthUserGuard)
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get('/')
-  getAll() {
-    console.log('Get all users');
-    return this.usersService.findAll();
+  @Get('/possible-friends')
+  findPossibleFriends(@AuthUser() user: User) {
+    return this.usersService.findPossibleFriends(user);
   }
 
-  @UseGuards(AuthUserGuard)
   @Get('/me')
   me(@AuthUser() user: User) {
     return user;

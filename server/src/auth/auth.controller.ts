@@ -3,6 +3,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Post,
   Req,
   Res,
   UseGuards,
@@ -34,6 +35,12 @@ export class AuthController {
     const token = this.authService.signin(req.user);
     res.cookie('chatcito-token', token, { httpOnly: true });
 
-    return res.redirect('http://localhost:3000/hello');
+    return res.redirect('http://localhost:3000/home');
+  }
+
+  @Post('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('chatcito-token', { httpOnly: true });
+    return { success: true };
   }
 }

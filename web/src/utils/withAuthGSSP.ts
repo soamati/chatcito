@@ -44,6 +44,7 @@ export const withAuthGSSP = (): GetServerSideProps => {
         },
       };
     } catch (error) {
+      console.log(error);
       return {
         props: {},
       };

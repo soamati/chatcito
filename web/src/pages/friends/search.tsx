@@ -1,13 +1,12 @@
 import React from 'react';
 import { NextPage } from 'next';
-import { Page } from '../../layouts/Page';
-import { useAllUsers } from '../../features/users/queries';
 import { Input, Stack } from '@mantine/core';
-import { PossibleFriend } from '../../features/friendships/PossibleFriend';
-import { InferQueryOutput } from '../../types';
-import { useFilter } from '../../hooks/useFilter';
-
-type User = InferQueryOutput<'user.all'>[number];
+import { User } from '@/types';
+import { useFilter } from '@/hooks/useFilter';
+import { PossibleFriendItem } from '@/features/friendships/PossibleFriend';
+import { Page } from '@/layouts/Page';
+import { usePossibleFriends } from '@/features/friendships/queries';
+import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 function filterUsers(filter: string) {
   return (user: User) => {
@@ -16,7 +15,7 @@ function filterUsers(filter: string) {
 }
 
 const SearchPage: NextPage = () => {
-  const [users] = useAllUsers();
+  const [users] = usePossibleFriends();
 
   const { filtered, getInputProps } = useFilter(users, filterUsers);
 
@@ -31,7 +30,7 @@ const SearchPage: NextPage = () => {
           {...getInputProps()}
         />
         {filtered.map((user) => (
-          <PossibleFriend key={user.id} user={user} />
+          <PossibleFriendItem key={user.id} user={user} />
         ))}
       </Stack>
     </Page>
@@ -39,3 +38,5 @@ const SearchPage: NextPage = () => {
 };
 
 export default SearchPage;
+
+export const getServerSideProps = withAuthGSSP();

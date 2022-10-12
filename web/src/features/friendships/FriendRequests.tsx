@@ -1,14 +1,13 @@
 import React from 'react';
 import { useFriendRequests } from './queries';
-import { Loader } from '../../components/Loader';
 import { Center, Stack, Text } from '@mantine/core';
-import { PossibleFriend } from './PossibleFriend';
+import { PossibleFriendItem } from './PossibleFriend';
 
 export const FriendRequests = () => {
   const [possibleFriends] = useFriendRequests();
 
   if (!possibleFriends) {
-    return <Loader />;
+    return null;
   }
 
   if (!possibleFriends.length) {
@@ -22,7 +21,7 @@ export const FriendRequests = () => {
   return (
     <Stack mt="xs" spacing="xs">
       {possibleFriends.map((friend) => (
-        <PossibleFriend key={friend.id} user={friend} />
+        <PossibleFriendItem key={friend.id} user={friend} />
       ))}
     </Stack>
   );

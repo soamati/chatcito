@@ -1,15 +1,19 @@
 import React from 'react';
 import { Paper, Group, Button, Text } from '@mantine/core';
-import { InferQueryOutput } from '../../types';
-import { useAcceptRequest, useCancelRequest, useSendRequest } from './queries';
-import { useWatchedState } from '../../hooks/useWatchedState';
-import { UserPreview } from '../../components/UserPreview';
+import {
+  PossibleFriend,
+  useAcceptRequest,
+  useCancelRequest,
+  useSendRequest,
+} from './queries';
+import { UserPreview } from '@/components/UserPreview';
+import { useWatchedState } from '@/hooks/useWatchedState';
 
 type Props = {
-  user: InferQueryOutput<'user.all'>[number];
+  user: PossibleFriend;
 };
 
-export const PossibleFriend = ({ user }: Props) => {
+export const PossibleFriendItem = ({ user }: Props) => {
   const [friendship, setFriendship] = useWatchedState(user.friendship);
 
   const [send, isSending] = useSendRequest();

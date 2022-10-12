@@ -1,6 +1,5 @@
 import React from 'react';
 import { Center, Stack, Text } from '@mantine/core';
-import { Loader } from '../../components/Loader';
 import { InvitationItem } from './InvitationItem';
 import { useReceivedInvitations } from './queries';
 
@@ -8,7 +7,7 @@ export const ReceivedInvitations = () => {
   const [invitations] = useReceivedInvitations();
 
   if (!invitations) {
-    return <Loader />;
+    return null;
   }
 
   if (!invitations.length) {

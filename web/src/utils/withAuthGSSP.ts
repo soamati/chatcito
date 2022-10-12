@@ -18,11 +18,7 @@ export const withAuthGSSP = (): GetServerSideProps => {
         }
       );
 
-      const {
-        result: { data },
-      } = await res.json();
-
-      if (!data && resolvedUrl !== '/') {
+      if (!res.ok) {
         return {
           redirect: {
             destination: '/',
@@ -31,7 +27,9 @@ export const withAuthGSSP = (): GetServerSideProps => {
         };
       }
 
-      if (data && resolvedUrl === '/') {
+      const user = await res.json();
+
+      if (resolvedUrl === '/') {
         return {
           redirect: {
             destination: '/home',
@@ -42,11 +40,10 @@ export const withAuthGSSP = (): GetServerSideProps => {
 
       return {
         props: {
-          user: data,
+          user,
         },
       };
     } catch (error) {
-      console.log(error);
       return {
         props: {},
       };

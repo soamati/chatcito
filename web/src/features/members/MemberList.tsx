@@ -1,21 +1,20 @@
 import React from 'react';
-import { Badge, Group, Paper, Stack } from '@mantine/core';
-import { Loader } from '../../components/Loader';
-import { useMembers } from './queries';
+import { Badge, Center, Group, Loader, Paper, Stack } from '@mantine/core';
+import { User } from '@/types';
+import { UserPreview } from '@/components/UserPreview';
 import { MemberItem } from './MemberItem';
-import { ExcludeNull, InferQueryOutput } from '../../types';
-import { UserPreview } from '../../components/UserPreview';
+import { useMembers } from './queries';
 
 type Props = {
   isOwner: boolean;
-  owner: ExcludeNull<InferQueryOutput<'room.byId'>>['owner'];
+  owner: User;
 };
 
 export const MemberList = ({ isOwner, owner }: Props) => {
   const [members] = useMembers();
 
   if (!members) {
-    return <Loader />;
+    return null;
   }
 
   return (

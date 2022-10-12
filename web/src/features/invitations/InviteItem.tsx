@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Group, Paper } from '@mantine/core';
-import { UserPreview } from '../../components/UserPreview';
-import { InferQueryOutput } from '../../types';
 import { useInvite } from './queries';
+import { User } from '@/types';
+import { UserPreview } from '@/components/UserPreview';
 
 type Props = {
-  friend: InferQueryOutput<'friendship.friends'>[number];
+  friend: User;
 };
 
 export const InviteItem = ({ friend }: Props) => {

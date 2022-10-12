@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, Input, Group, Button, Stack, Text } from '@mantine/core';
-import { useValidatedInput } from '../../hooks/useValidatedInput';
-import { Room } from './types';
 import { useUpdateRoom } from './queries';
+import { Room } from '@/types';
+import { useValidatedInput } from '@/hooks/useValidatedInput';
 
 type Props = {
   room: Room;

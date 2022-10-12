@@ -3,9 +3,9 @@ import { ActionIcon, Menu } from '@mantine/core';
 import { MoodSmile, Pencil, Settings, UserPlus } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
 import { useBoolean } from '../../hooks/useBoolean';
-import { Room } from './types';
 import { ChangeNameModal } from './ChangeNameModal';
 import { useLeaveRoom } from './queries';
+import { Room } from '@/types';
 
 type Props = {
   room: Room;

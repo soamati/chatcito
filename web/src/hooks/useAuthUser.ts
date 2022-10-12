@@ -1,8 +1,11 @@
+import api from '@/api';
+import { User } from '@/types';
 import { useQuery } from 'react-query';
-import { trpc } from '../lib/trpc';
 
 export function useAuthUser() {
-  const { data, isLoading } = useQuery(['user'], () => trpc.query('user.auth'));
+  const { data, isLoading } = useQuery(['user'], () =>
+    api.get<User>('/users/me')
+  );
 
   return [data, isLoading] as const;
 }

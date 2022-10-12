@@ -1,16 +1,17 @@
 import React from 'react';
+import api from '@/api';
 import { Button } from '@mantine/core';
-import { useRouter } from 'next/router';
 import { Logout } from 'tabler-icons-react';
-
-const LOGOUT_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/logout`;
+import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
 
 export const LogoutButton = () => {
   const router = useRouter();
-
-  const onClick = React.useCallback(() => {
-    router.push(LOGOUT_URL);
-  }, [router]);
+  const { mutate, isLoading } = useMutation(() => api.post('/auth/logout'), {
+    onSuccess: () => {
+      router.push('/');
+    },
+  });
 
   return (
     <Button
@@ -18,7 +19,8 @@ export const LogoutButton = () => {
       color="red"
       size="xs"
       leftIcon={<Logout size={16} />}
-      onClick={onClick}
+      onClick={() => mutate()}
+      loading={isLoading}
     >
       Salir
     </Button>

@@ -11,6 +11,7 @@ type Props = {
   HeaderSide?: React.ReactNode;
   showHeader?: boolean;
   showBottomNav?: boolean;
+  full?: boolean;
 };
 
 export const Page = ({
@@ -19,7 +20,19 @@ export const Page = ({
   HeaderSide,
   showHeader = true,
   showBottomNav = true,
+  full = false,
 }: PropsWithChildren<Props>) => {
+  if (full) {
+    return (
+      <Container
+        size="sm"
+        sx={{ display: 'flex', minHeight: '100vh', padding: 0 }}
+      >
+        {children}
+      </Container>
+    );
+  }
+
   return (
     <Container
       size="sm"

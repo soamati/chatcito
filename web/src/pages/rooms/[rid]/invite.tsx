@@ -1,12 +1,11 @@
 import React from 'react';
-import { Stack } from '@mantine/core';
-import { Loader } from '../../../components/Loader';
-import { useFriends } from '../../../features/friendships/queries';
-import { InviteItem } from '../../../features/invitations/InviteItem';
-import { useRoom } from '../../../features/rooms/queries';
-import { Page } from '../../../layouts/Page';
-import { withAuthGSSP } from '../../../utils/withAuthGSSP';
-import { GoBack } from '../../../components/GoBack';
+import { Center, Loader, Stack } from '@mantine/core';
+import { GoBack } from '@/components/GoBack';
+import { useFriends } from '@/features/friendships/queries';
+import { InviteItem } from '@/features/invitations/InviteItem';
+import { useRoom } from '@/features/rooms/queries';
+import { Page } from '@/layouts/Page';
+import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 const InvitePage = () => {
   const { room, isLoading } = useRoom();
@@ -15,7 +14,9 @@ const InvitePage = () => {
   if (isLoading || !friends) {
     return (
       <Page>
-        <Loader />
+        <Center sx={{ height: '100%' }}>
+          <Loader />
+        </Center>
       </Page>
     );
   }

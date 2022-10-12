@@ -1,10 +1,11 @@
 import { showNotification } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { trpc } from '../../lib/trpc';
-import { useRoomId } from '../rooms/useRoomId';
 import { TReceivedInvitation } from './types';
+import { useRoomId } from '@/features/rooms/useRoomId';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import api from '@/api';
+import { Invitation } from '@/types';
 
 export function useInvite() {
   const roomId = useRoomId();
@@ -12,7 +13,7 @@ export function useInvite() {
 
   const { mutate, isLoading } = useMutation(
     (targetId: string) =>
-      trpc.mutation('invitation.send', { roomId, targetId }),
+      api.post<Invitation>('/invitations/send', { targetId, roomId }),
     {
       onSuccess() {
         showNotification({
@@ -31,7 +32,7 @@ export function useInvite() {
 
 export function useReceivedInvitations() {
   const { data, isLoading } = useQuery(['invitations'], () =>
-    trpc.query('invitation.received')
+    api.get<Invitation[]>('/invitations/received')
   );
 
   return [data, isLoading] as const;
@@ -43,9 +44,9 @@ export function useAccept() {
 
   const { mutate, isLoading } = useMutation(
     (invitationId: string) =>
-      trpc.mutation('invitation.accept', { invitationId }),
+      api.post<{ roomId: string }>(`/invitations/accept/${invitationId}`),
     {
-      onSuccess(roomId, invitationId) {
+      onSuccess({ roomId }, invitationId) {
         queryClient.setQueryData<TReceivedInvitation[]>(
           ['invitations'],
           (prev) => {
@@ -67,8 +68,7 @@ export function useReject() {
   const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(
-    (invitationId: string) =>
-      trpc.mutation('invitation.cancelOrReject', { invitationId }),
+    (invitationId: string) => api.delete(`/invitations/${invitationId}`),
     {
       onSuccess(_, invitationId) {
         queryClient.setQueryData<TReceivedInvitation[]>(

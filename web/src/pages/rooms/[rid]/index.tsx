@@ -1,32 +1,33 @@
 import React from 'react';
 import { NextPage } from 'next';
-import { useRoom } from '../../../features/rooms/queries';
-import { Page } from '../../../layouts/Page';
-import { Box, Center, ScrollArea, Text } from '@mantine/core';
-import { ChatInput } from '../../../features/rooms/ChatInput';
-import { Chats } from '../../../features/rooms/Chats';
-import { withAuthGSSP } from '../../../utils/withAuthGSSP';
-import { Loader } from '../../../components/Loader';
-import { GoBack } from '../../../components/GoBack';
-import { useJoinRoom } from '../../../features/rooms/useJoinRoom';
-import { useScroll } from '../../../hooks/useScroll';
-import { RoomMenu } from '../../../features/rooms/RoomMenu';
+import { Box, Center, Loader, ScrollArea, Text } from '@mantine/core';
+import { useScroll } from '@/hooks/useScroll';
+import { GoBack } from '@/components/GoBack';
+import { ChatInput } from '@/features/rooms/ChatInput';
+import { Chats } from '@/features/rooms/Chats';
+import { useRoom } from '@/features/rooms/queries';
+import { RoomMenu } from '@/features/rooms/RoomMenu';
+import { useJoinRoom } from '@/features/rooms/useJoinRoom';
+import { Page } from '@/layouts/Page';
+import { withAuthGSSP } from '@/utils/withAuthGSSP';
 
 const RoomPage: NextPage = () => {
   const { ref, toBottom } = useScroll();
   const { room, isLoading } = useRoom();
-  const { join, isJoined } = useJoinRoom();
+  // const { join, isJoined } = useJoinRoom();
 
-  React.useEffect(() => {
-    if (!room) return;
+  // React.useEffect(() => {
+  //   if (!room) return;
 
-    join(room.id);
-  }, [room, join]);
+  //   join(room.id);
+  // }, [room, join]);
 
   if (isLoading) {
     return (
-      <Page>
-        <Loader />
+      <Page full>
+        <Center sx={{ flex: 1 }}>
+          <Loader />
+        </Center>
       </Page>
     );
   }
@@ -39,15 +40,15 @@ const RoomPage: NextPage = () => {
     );
   }
 
-  if (!isJoined) {
-    return (
-      <Page>
-        <Center sx={{ height: '100%' }}>
-          <Text>Uniéndose</Text>
-        </Center>
-      </Page>
-    );
-  }
+  // if (!isJoined) {
+  //   return (
+  //     <Page>
+  //       <Center sx={{ height: '100%' }}>
+  //         <Text>Uniéndose</Text>
+  //       </Center>
+  //     </Page>
+  //   );
+  // }
 
   return (
     <Page
